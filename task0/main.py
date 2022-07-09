@@ -11,6 +11,7 @@ fy = -480.00
 cx = 319.50
 cy = 239.50
 
+
 # 1. Creating the vector of colors.
 colors_image = Image.open('data/annot.png')
 colors_matrix = np.array(colors_image) / 256
@@ -37,7 +38,7 @@ U = uvd_points_vector[:, 0]
 V = uvd_points_vector[:, 1]
 D = uvd_points_vector[:, 2]
 
-Z = D / 5000
+Z = D / SCALE_FACTOR
 X = (U - cx) * Z / fx
 Y = (V - cy) * Z / fy
 
