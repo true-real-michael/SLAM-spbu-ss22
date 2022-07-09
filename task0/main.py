@@ -25,24 +25,24 @@ depths_matrix = np.array(depths_image)
 
 # 2.1. Creating the vector of points where each element is (u_coordinate, v_coordinate, depth)
 M, N = depths_matrix.shape
-V_index, U_index = np.ix_(np.arange(M), np.arange(N))
+v_index, u_index = np.ix_(np.arange(M), np.arange(N))
 
 uvd_points_matrix = np.zeros(colors_matrix.shape)
-uvd_points_matrix[:, :, 0] = U_index
-uvd_points_matrix[:, :, 1] = V_index
+uvd_points_matrix[:, :, 0] = u_index
+uvd_points_matrix[:, :, 1] = v_index
 uvd_points_matrix[:, :, 2] = depths_matrix
 uvd_points_vector = uvd_points_matrix.reshape((uvd_points_matrix.shape[0] * uvd_points_matrix.shape[1], uvd_points_matrix.shape[2]))
 
 # 2.2. Separating the uvd-coordinates and calculating xyz-coordinates.
-U = uvd_points_vector[:, 0]
-V = uvd_points_vector[:, 1]
-D = uvd_points_vector[:, 2]
+u_coordinates = uvd_points_vector[:, 0]
+v_coordinates = uvd_points_vector[:, 1]
+depths = uvd_points_vector[:, 2]
 
-Z = D / SCALE_FACTOR
-X = (U - cx) * Z / fx
-Y = (V - cy) * Z / fy
+z_coordinates = depths / SCALE_FACTOR
+x_coordinates = (u_coordinates - cx) * z_coordinates / fx
+y_coordinates = (v_coordinates - cy) * z_coordinates / fy
 
-xyz_points_vector = np.column_stack((X, Y, Z))
+xyz_points_vector = np.column_stack((x_coordinates, y_coordinates, z_coordinates))
 
 
 # 3. Visualizing the point cloud.
