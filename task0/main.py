@@ -5,6 +5,7 @@ from PIL import Image
 
 # Dataset and camera parameters.
 SCALE_FACTOR = 5000
+RGB_NUMBER_OF_SHADES = 256
 
 fx = 481.20
 fy = -480.00
@@ -14,8 +15,8 @@ cy = 239.50
 
 def get_colors_vector(colors_image_path):
     colors_image = Image.open(colors_image_path)
-    colors_matrix = np.array(colors_image) / 256
-    colors_vector = colors_matrix.reshape((307200, 3))
+    colors_matrix = np.array(colors_image) / RGB_NUMBER_OF_SHADES
+    colors_vector = colors_matrix.reshape((colors_matrix.shape[0] * colors_matrix.shape[1], 3))
 
 
 def get_points_vector(depth_image_path):
@@ -27,7 +28,7 @@ def get_points_vector(depth_image_path):
     U = np.tile(np.arange(N), M)
     D = depths_matrix.reshape(depths_matrix.size)
 
-    Z = D / 5000
+    Z = D / SCALE_FACTOR
     X = (U - cx) * Z / fx
     Y = (V - cy) * Z / fy
 
