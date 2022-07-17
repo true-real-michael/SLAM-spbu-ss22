@@ -17,6 +17,7 @@ def get_colors_vector(colors_image_path):
     colors_image = Image.open(colors_image_path)
     colors_matrix = np.array(colors_image) / RGB_NUMBER_OF_SHADES
     colors_vector = colors_matrix.reshape((colors_matrix.shape[0] * colors_matrix.shape[1], 3))
+    return colors_vector
 
 
 def get_points_vector(depth_image_path):
